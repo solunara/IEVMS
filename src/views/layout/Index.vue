@@ -1,35 +1,28 @@
 <template>
-    <div id="module">
-        <!-- container 布局容器 -->
-        <el-container>
-            <!-- 左侧菜单 -->
-            <NavMenu />
-
-            <!-- 右侧主体 -->
-            <el-container>
-                <!-- 头部 -->
-                <el-header>
-                    <!-- 面包屑 -->
-                    <Breadcrumb />
-                    <!-- 语言切换 -->
-                    <Lang />
-                </el-header>
-
-                <!-- 主体 -->
-                <el-main>
-                    <router-view></router-view>
-                </el-main>
-            </el-container>
+    <div class="common-layout">
+        <el-container class="el-container">
+            <Aside></Aside>
+        <el-container class="el-container__el-container">
+            <Header></Header>
+            <Main></Main>
+        </el-container>
         </el-container>
     </div>
 </template>
 
 <script setup>
-import NavMenu from './NavMenu.vue';
-import Breadcrumb from './Breadcrumb.vue';
-import Lang from './Lang.vue';
+import Aside from '@/views/layout/Aside.vue';
+import Header from '@/views/layout/Header.vue';
+import Main from '@/views/layout/Main.vue';
 </script>
 
 <style lang="scss" scoped>
-
+.el-container {
+    height: 100vh;
+    width: 100vw;
+    .el-container__el-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
 </style>

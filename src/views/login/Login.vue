@@ -1,7 +1,12 @@
 <script setup>
 import { ref,reactive } from 'vue'
 import { Connection, MessageBox } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { CONFIG  } from '@/config/api.js'
+import { setToken } from '@/config/api.js'
 
+const router = useRouter()
 const ruleFormRef = ref()
 const ruleForm = reactive({
     account: 'admin',
@@ -18,13 +23,21 @@ const rules = reactive({
         { min: 3, max: 18, message: 'Length should be 3 to 18', trigger: 'blur' },
     ],
 })
-//登录
-function submitForm(formEl){
-    formEl.validate(valid=>{
+
+const  submitForm = ()=>{
+    ruleFormRef.value.validate(valid=>{
         if(valid){
-
+            ElMessage({
+                message: '登陆成功',
+                type: 'success',
+            })
+            setToken('myToken')
+            router.replace('/home')
         }else {
-
+            ElMessage({
+                message: '登陆失败，数据验证失败！',
+                type: 'error',
+            })
         }
     })
 }
