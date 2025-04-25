@@ -1,5 +1,7 @@
 <template>
-    <el-main><router-view></router-view></el-main>
+    <div>
+        地图
+    </div>
 </template>
 
 <script setup>

@@ -1,10 +1,15 @@
 <template>
     <div class="common-layout">
         <el-container class="el-container">
+            <!-- 左侧导航 -->
             <NavMenu />
             <el-container class="el-container__el-container">
-                <Header></Header>
-                <Main></Main>
+                <el-header>
+                    <Header></Header>
+                </el-header>
+                <el-main>
+                    <Main></Main>
+                </el-main>
             </el-container>
         </el-container>
     </div>

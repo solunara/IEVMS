@@ -1,5 +1,7 @@
 <template>
-    <el-main><router-view></router-view></el-main>
+    <div>
+        查看操作员
+    </div>
 </template>
 
 <script setup>

@@ -1,5 +1,7 @@
 <template>
-    <el-main><router-view></router-view></el-main>
+    <div>
+        电量监控
+    </div>
 </template>
 
 <script setup>

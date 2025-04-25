@@ -22,7 +22,7 @@ const route = useRoute();
 const items = ref([]);
 
 const menuData = [
-  {id: 1, menu_name: "首页", father_id: 0, menu_type: 1, menu_level: 1, menu_url: "/home"},
+  {id: 1, menu_name: "首页", father_id: 0, menu_type: 1, menu_level: 1, menu_url: "/index"},
   {id: 2, menu_name: "车辆列表", father_id: 0, menu_type: 1, menu_level: 1, menu_url: "/vehicle"},
   {id: 3, menu_name: "电量监控", father_id: 0, menu_type: 1, menu_level: 2, menu_url: "/monitor"},
   {id: 4, menu_name: "车辆充电", father_id: 3, menu_type: 1, menu_level: 2, menu_url: "/monitor/charge"},
@@ -31,9 +31,9 @@ const menuData = [
   {id: 7, menu_name: "地图分布", father_id: 0, menu_type: 1, menu_level: 1, menu_url: "/maplocation"},
   {id: 8, menu_name: "统计分析", father_id: 0, menu_type: 1, menu_level: 1, menu_url: "/census"},
   {id: 9, menu_name: "权限管理", father_id: 0, menu_type: 1, menu_level: 1, menu_url: "/power"},
-  {id: 10, menu_name: "创建操作员", father_id: 9, menu_type: 1, menu_level: 2, menu_url: "/power/add"},
-  {id: 11, menu_name: "操作员列表", father_id: 9, menu_type: 1, menu_level: 2, menu_url: "/power/list"},
-  {id: 12, menu_name: "操作员权限", father_id: 9, menu_type: 1, menu_level: 2, menu_url: "/power/edit"}
+  {id: 10, menu_name: "创建操作员", father_id: 9, menu_type: 1, menu_level: 2, menu_url: "/power/addoperator"},
+  {id: 11, menu_name: "操作员列表", father_id: 9, menu_type: 1, menu_level: 2, menu_url: "/power/viewoperator"},
+  {id: 12, menu_name: "操作员权限", father_id: 9, menu_type: 1, menu_level: 2, menu_url: "/power/editoperator"}
 ]
 
 onMounted(async()=>{

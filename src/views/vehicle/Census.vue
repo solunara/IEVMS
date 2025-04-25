@@ -1,5 +1,7 @@
 <template>
-    <el-main><router-view></router-view></el-main>
+    <div>
+        统计分析
+    </div>
 </template>
 
 <script setup>
