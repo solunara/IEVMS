@@ -1,14 +1,18 @@
 <template>
-    <div class="common-layout">
+    <div id="module">
         <el-container class="el-container">
             <!-- 左侧导航 -->
             <NavMenu />
             <el-container class="el-container__el-container">
                 <el-header>
+                    <!-- 顶部菜单 -->
                     <Header></Header>
+                    <!-- 面包屑 -->
+                    <Breadcrumb />
                 </el-header>
                 <el-main>
-                    <Main></Main>
+                    <!-- 右侧主体 -->
+                <router-view />
                 </el-main>
             </el-container>
         </el-container>
@@ -18,7 +22,6 @@
 <script setup>
 import NavMenu from '@/views/layout/NavMenu.vue';
 import Header from '@/views/layout/Header.vue';
-import Main from '@/views/layout/Main.vue';
 </script>
 
 <style lang="scss" scoped>
