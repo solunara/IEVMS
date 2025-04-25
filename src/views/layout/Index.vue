@@ -1,17 +1,17 @@
 <template>
     <div class="common-layout">
         <el-container class="el-container">
-            <Aside></Aside>
-        <el-container class="el-container__el-container">
-            <Header></Header>
-            <Main></Main>
-        </el-container>
+            <NavMenu />
+            <el-container class="el-container__el-container">
+                <Header></Header>
+                <Main></Main>
+            </el-container>
         </el-container>
     </div>
 </template>
 
 <script setup>
-import Aside from '@/views/layout/Aside.vue';
+import NavMenu from '@/views/layout/NavMenu.vue';
 import Header from '@/views/layout/Header.vue';
 import Main from '@/views/layout/Main.vue';
 </script>
