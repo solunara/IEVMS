@@ -1,14 +1,14 @@
 <template>
     <div class="header">
         <!-- 折叠/打开菜单 -->
-        <el-button @click="collapseChange" class="fole_expand">
+        <!-- <el-button @click="collapseChange" class="fole_expand">
             <el-icon size="20px" v-if="!isCollapse">
                 <Fold />
             </el-icon>
             <el-icon size="20px" v-else>
                 <Expand />
             </el-icon>
-        </el-button>
+        </el-button> -->
         
         <!-- 语言切换 -->
         <lang />
@@ -37,7 +37,7 @@ import { SwitchButton, Fold, Expand } from '@element-plus/icons-vue'
     flex-wrap: wrap; // 允许内容换行
     align-items: center;
     padding: 0 10px;
-    height: auto;
+    height: 30%;
 
     .fole_expand {
         margin-right: auto;

@@ -1,5 +1,7 @@
 <script setup>
-import { ref, defineProps } from 'vue'
+import { defineProps } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useTagStore } from '@/stores/tag.js'
 import {
   Document,
   Menu as IconMenu,
@@ -12,11 +14,20 @@ const {item} = defineProps({
         type:Object
     }
 })
+
+const store = useTagStore();
+const {getTagLists} = storeToRefs(store);
+const handle = item =>{
+    //添加判断，去重
+    let repeat = getTagLists.value.some(v=>v.menu_url==item.menu_url);
+    if(repeat) return;
+    store.addTag(item);
+}
 </script>
 
 <template>
     <!-- 无子级 -->
-    <el-menu-item :index="item.menu_url" v-if="!item.children">
+    <el-menu-item :index="item.menu_url" v-if="!item.children" @click="handle(item)">
         <el-icon><icon-menu /></el-icon>
         <span>{{ item.menu_name }}</span>
     </el-menu-item>
