@@ -27,7 +27,7 @@ const routes = [
         path: '/vehicle',
         name: 'vehicle',
         meta: {title: '车辆列表'},
-        component: () => import('@/views/vehicle/Vehicle.vue'),
+        component: () => import('@/views/vehicle/list/Vehicle.vue'),
       },
       {
         path: '/monitor',

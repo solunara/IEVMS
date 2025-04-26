@@ -6,10 +6,7 @@ export const API_CONFIG = {
     logoutApi: `${BASE_URL}/logout`,
 
     // user
-    getUserListApi: `${BASE_URL}/user/list`,
-    deleteUserApi: `${BASE_URL}/user/delete`,
-    addUserApi: `${BASE_URL}/user/add`,
-    updateUserApi: `${BASE_URL}/user/update`,
+    getVehicleListApi: `${BASE_URL}/vehicle/list`,
 }
 
 export const CONFIG = {
