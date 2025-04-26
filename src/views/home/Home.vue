@@ -9,48 +9,50 @@
         </div>
     </div>
     <!-- 第二行 -->
-    <div class="module-box">
-        <div style="flex:0 1 60%;margin:5px;">
+    <div class="module-box" style="margin:0 5px 0 5px;">
+        <div style="flex:0 1 55%; margin-right: 5px;">
             <el-card class="box-card">
-                <Chart height="450px" :option="stackedAreaOpt" />
+                <ChinaMap height="547px" />
             </el-card>
         </div>
-        <div style="flex:0 1 40%;margin:5px;">
-            <div style="flex:0 1 100%;margin:5px;">
+        <div style="flex:0 1 45%;">
+            <div style="flex:0 1 100%; margin: 0 0 5px 5px;">
                 <el-card class="box-card">
-                    <Chart height="200px" :option="doughnutChartOpt" />
+                    <Chart height="250px" :option="doughnutChartOpt" />
                 </el-card>
             </div>
-            <div style="flex:0 1 100%;margin:5px;">
+            <div style="flex:0 1 100%; margin: 5px 0 0 5px;">
                 <el-card class="box-card">
-                    <Chart height="200px" :option="axisAlignwithTickOpt" />
+                    <Chart height="250px" :option="stackedLine" />
                 </el-card>
             </div>
         </div>
     </div>
     <!-- 第三行 -->
-    <!-- <div class="module-box">
+    <div class="module-box">
         <div style="flex:0 1 30%;margin:5px;">
-        <el-card class="box-card">
-            <Chart height="200px" :option="doughnutChartOpt" />
-        </el-card>
-        </div>
+          <el-card class="box-card">
+            <Chart height="400px" :option="axisAlignwithTickOpt" />
+          </el-card>
+          </div>
 
-        <div style="flex:0 1 70%;margin:5px;">
-        <el-card class="box-card">
-            <Chart height="200px" :option="axisAlignwithTickOpt" />
-        </el-card>
+          <div style="flex:0 1 70%;margin:5px;">
+          <el-card class="box-card">
+            <Chart height="400px" :option="stackedAreaOpt" />
+          </el-card>
         </div>
-    </div> -->
+    </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { Connection, MessageBox } from '@element-plus/icons-vue'
-import Chart from './Chart.vue'
-import stackedAreaOpt from './stackedAreaOpt'
-import doughnutChartOpt from './doughnutChartOpt'
-import axisAlignwithTickOpt from './axisAlignwithTickOpt'
+import Chart from './charts/Chart.vue'
+import ChinaMap from './charts/ChinaMap.vue'
+import stackedAreaOpt from './charts/stackedAreaOpt'
+import doughnutChartOpt from './charts/doughnutChartOpt'
+import axisAlignwithTickOpt from './charts/axisAlignwithTickOpt'
+import stackedLine from './charts/stackedLine'
 const lists = ref([
     {title: '电量监控', icon: Connection},
     {title: '车辆详情', icon: Connection},
@@ -67,8 +69,8 @@ const lists = ref([
   justify-content: space-between;
 }
 .list-box{
-  margin: 0 10px;
-  padding: 20px;
+  margin: 0 0 5px 0;
+  padding: 30px;
   box-shadow: 0 3px 20px 2px rgb(0 0 0 / 30%);
   display: flex;
   flex-direction: column;
