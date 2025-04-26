@@ -17,14 +17,18 @@ const props = defineProps({
         default:false
     }
 })
-const emit = defineEmits(['confirm','update:visible'])
+const emit = defineEmits(['confirm'])
 //取消触发
 const cancel = ()=>{
-    emit('update:visible',false)
+    emit('update:visible', false)
 }
 //确定触发
 const confirm = ()=>{
-    emit('confirm');
+    if(props.dialogTitle.includes('新增')){
+      emit('confirm', 'add');
+    }else{
+      emit('confirm', 'update');
+    }
 }
 </script>
 
@@ -43,7 +47,7 @@ const confirm = ()=>{
       <span class="dialog-footer">
         <el-button @click="cancel">取消</el-button>
         <el-button type="primary" @click="confirm">
-          {{ props. btnTitle}}
+          {{ props.btnTitle }}
         </el-button>
       </span>
     </template>
