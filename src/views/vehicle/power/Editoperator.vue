@@ -83,34 +83,13 @@ function handleCommand(command){
     // let res = await findModulesByUid({id:command.id});
     menuList.value = [];
     //数据结构转换
-    opersList.value = operatorPermissionData[command-1]
     handleLevel(menuList.value, operatorPermissionData[command-1]);
 }
 
 //修改权限
-function update(row,v){
-    console.log('old1: ', operatorPermissionData[userID.value][row.id]);
-    let exisedPermission=false
+function update(row, v){
     if(!userID.value) return;
-    if(operatorPermissionData[userID.value][row.id].userPermission===null){
-        console.log('row.id: ', row.id);
-        console.log('old2: ');
-        operatorPermissionData[userID.value][row.id].userPermission=[v.label]
-    }else{
-        for(let i=0;i<operatorPermissionData[userID.value][row.id].userPermission.length;i++){
-            console.log('old3: ', operatorPermissionData[userID.value][row.id]);
-            console.log('old4: ', operatorPermissionData[userID.value][row.id].userPermission);
-            if (operatorPermissionData[userID.value][row.id].userPermission[i] === v.label){
-                exisedPermission=true
-                operatorPermissionData[userID.value][row.id].userPermission.splice(i,1)
-                break
-            }
-        }
-        if(!exisedPermission){
-            operatorPermissionData[userID.value][row.id].userPermission=[ ...operatorPermissionData[userID.value][row.id].userPermission, v.label]
-        }
-    }
-    console.log('new: ', operatorPermissionData[userID.value][row.id].userPermission);
+    operatorPermissionData[userID.value-1][row.id-1].userPermission = row.userPermission
 
     //   let data = {
     //     uid:userID.value,
