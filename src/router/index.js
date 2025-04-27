@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { CONFIG } from '@/config/api.js'
+import { getToken } from '@/config/api.js'
 
 const routes = [
   {
@@ -103,18 +103,18 @@ const router = createRouter({
 })
 
 // 全局前置路由守卫
-// router.beforeEach((to, from, next)=>{
-//   const toLogin = to.path.indexOf('/login')
-//   const tokenVal = window.localStorage.getItem(CONFIG.TOKEN_NAME)
-//   if (toLogin == 0 && tokenVal){
-//       next('/home')
-//   }else if(toLogin == 0 && !tokenVal) {
-//       next()
-//   }else if( tokenVal ){
-//       next()
-//   }else {
-//       next('/login')
-//   }
-// })
+router.beforeEach((to, from, next)=>{
+  const toLogin = to.path.indexOf('/login')
+  const tokenVal = getToken()
+  if (toLogin == 0 && tokenVal){
+      next('/home')
+  }else if(toLogin == 0 && !tokenVal) {
+      next()
+  }else if( tokenVal ){
+      next()
+  }else {
+      next('/login')
+  }
+})
 
 export default router

@@ -26,9 +26,28 @@
 </template>
 
 <script setup>
+import { ElMessageBox } from 'element-plus'
 import Lang from '@/components/Lang.vue'
 import Breadcrumb from '@/components/Breadcrumb.vue'
 import { SwitchButton, Fold, Expand } from '@element-plus/icons-vue'
+import { removeToken } from '@/config/api'
+
+const confirmLogout = ()=>{
+   
+    ElMessageBox.confirm(
+    '是否退出登陆？',
+    {
+      confirmButtonText: '是',
+      cancelButtonText: '否',
+      type: 'warning',
+      draggable: true,
+    }
+  )
+    .then(async () =>  {
+        removeToken()
+        router.replace('/login')
+    })
+}
 </script>
 
 <style lang="scss" scoped>

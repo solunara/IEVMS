@@ -40,6 +40,26 @@ import NavMenu from '@/views/layout/NavMenu.vue';
 import FoldExpand from '@/components/FoldExpand.vue';
 import Tag from '@/components/Tag.vue'
 import { SwitchButton } from '@element-plus/icons-vue'
+import { ElMessageBox } from 'element-plus'
+import { removeToken } from '@/config/api'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const confirmLogout = ()=>{
+    ElMessageBox.confirm(
+    '是否退出登陆？',
+    {
+      confirmButtonText: '是',
+      cancelButtonText: '否',
+      type: 'warning',
+      draggable: true,
+    }
+  )
+    .then(async () =>  {
+        removeToken()
+        router.replace('/login')
+    })
+}
 </script>
 
 <style lang="scss" scoped>
