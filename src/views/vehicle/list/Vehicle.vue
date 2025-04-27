@@ -3,7 +3,7 @@
         <el-button type="success" @click="setData('add', null)">新增车辆</el-button>
     </el-card>
     <el-card class="box-card">
-        <el-table :data="tableData" style="width: 100%">
+        <el-table :data="tableData" style="width: 100%; margin-bottom: 10px;">
             <el-table-column prop="id" label="序号" />
             <el-table-column prop="number" label="车辆自编号" />
             <el-table-column prop="numberplate" label="车牌号" />
@@ -26,6 +26,24 @@
                 </template>
             </el-table-column>
         </el-table>
+
+        <!-- 分页 -->
+        <!-- <el-pagination
+            v-model:current-page="listQuery.pageIndex"
+            v-model:page-size="listQuery.pageSize"
+            :page-sizes="[5, 10, 20, 30]"
+            :background="background"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+        /> -->
+        <Pagination
+            :total="total"
+            v-model:pageIndex="listQuery.pageIndex"
+            v-model:pageSize="listQuery.pageSize"
+            @handleChange="getList"
+        />
     </el-card>
 
     <!-- 新增 / 编辑 弹窗 -->
@@ -79,7 +97,8 @@ import { getVehicleList } from '@/api/vehicle'
 import useDate from '@/utils/useDate' //vue-hooks
 import useCheck from '@/utils/useCheck' //vue-hooks
 import AddEditDialog from '@/components/AddEditDialog.vue'
-import { ElNotification } from 'element-plus'
+import Pagination from '@/components/Pagination.vue'
+import { ElNotification, paginationEmits } from 'element-plus'
 
 const {dateFilter}  = useDate();
 const {checkFilter}  = useCheck();
@@ -90,6 +109,7 @@ let category = ref(''); //添加或编辑
 let dialogVisible = ref(false); //是否显示弹框
 let dialogDelVisible = ref(false); //删除弹框
 let isExist = ref(false); //车牌校验
+let total = ref(0) //总数量
 const listQuery = ref({ //查询条件
     pageIndex:1,
     pageSize:10
@@ -118,11 +138,28 @@ onMounted(()=>{
 });
 
 //车辆查询
-const getList = ()=>{
+const getList = ()=> {
     // 实际是从后端请求车辆数据，这里用写好的 vehicleData
     // let {data:{data}} = getVehicleList(listQuery.value);
     // console.log(data);
-    tableData.value = vehicleData; //表格数据
+    let startIndex = (listQuery.value.pageIndex-1)*listQuery.value.pageSize;
+    if(startIndex >= vehicleData.length){
+        ElNotification({
+            title: '分页过大',
+            duration: 1500,
+            type: 'error',
+        });
+        return
+    }
+    let newData = [];
+    for(let i=startIndex; i<vehicleData.length;i++){
+        newData.push(vehicleData[i])
+        if (newData.length>=listQuery.value.pageSize){
+            break
+        }
+    }
+    tableData.value = newData; //表格数据
+    total=vehicleData.length
 }
 
 //添加或编辑 按钮触发
@@ -148,6 +185,7 @@ async function updateData(catgory){
         vehicleData.unshift(temp.value);
         console.log(vehicleData);
         tableData.value = newData;
+        total=newData.length
         ElNotification({
             title: '添加成功',
             duration: 1500,
@@ -169,6 +207,7 @@ async function updateData(catgory){
             type: 'success',
         });
         tableData.value = newData;
+        total=newData.length
     }
     dialogVisible.value = false; //弹框隐藏
 //   let {data:{code}} = await carSubmit(temp.value);
@@ -207,6 +246,7 @@ function deleteData(){
         }
     }
     tableData.value = newData;
+    total=newData.length
     ElNotification({
       title: '删除成功',
       duration: 1500,
@@ -225,6 +265,17 @@ function deleteData(){
 //     getList();
 //   }
 }
+
+const handleSizeChange = (val)=>{
+    listQuery.value.pageSize = val;
+    getList();
+
+}
+const handleCurrentChange=(val)=>{
+    listQuery.value.pageIndex = val;
+    getList();
+}
+
 </script>
 
 <style lang="scss" scoped>
