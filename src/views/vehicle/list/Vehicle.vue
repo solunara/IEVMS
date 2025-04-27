@@ -47,8 +47,8 @@
     </el-card>
 
     <!-- 新增 / 编辑 弹窗 -->
-    <AddEditDialog
-        width="20%"
+    <MyDialog
+        width="30%"
         v-model:visible = 'dialogVisible'
         :dialogTitle="category=='add' ? '新增车辆' : '编辑车辆'"
         :btnTitle = "category=='add' ? '新增' : '更新'"
@@ -78,17 +78,17 @@
                 <el-switch v-model="temp.check" />
             </el-form-item>
         </el-form>
-    </AddEditDialog>
+    </MyDialog>
 
     <!-- 删除 弹框 -->
-    <AddEditDialog 
+    <MyDialog 
         width="20%"
         v-model:visible = 'dialogDelVisible'
         :dialogTitle="'删除'"
         :btnTitle ="'删除'"
         @confirm="deleteData">
         是否删除第 {{ temp.id }} 号车辆数据吗?
-    </AddEditDialog>
+    </MyDialog>
 </template>
 
 <script setup>
@@ -96,9 +96,8 @@ import { ref,onMounted,computed } from 'vue'
 import { getVehicleList } from '@/api/vehicle'
 import useDate from '@/utils/useDate' //vue-hooks
 import useCheck from '@/utils/useCheck' //vue-hooks
-import AddEditDialog from '@/components/AddEditDialog.vue'
-import Pagination from '@/components/Pagination.vue'
-import { ElNotification, paginationEmits } from 'element-plus'
+import MyDialog from '@/components/MyDialog.vue'
+import { ElNotification } from 'element-plus'
 
 const {dateFilter}  = useDate();
 const {checkFilter}  = useCheck();
@@ -140,7 +139,7 @@ onMounted(()=>{
 //车辆查询
 const getList = ()=> {
     // 实际是从后端请求车辆数据，这里用写好的 vehicleData
-    // let {data:{data}} = getVehicleList(listQuery.value);
+    // let {data:{list, total}} = getVehicleList(listQuery.value);
     // console.log(data);
     let startIndex = (listQuery.value.pageIndex-1)*listQuery.value.pageSize;
     if(startIndex >= vehicleData.length){

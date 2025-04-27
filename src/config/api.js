@@ -5,8 +5,11 @@ export const API_CONFIG = {
     loginApi: `${BASE_URL}/login`,
     logoutApi: `${BASE_URL}/logout`,
 
-    // user
+    // vehicle
     getVehicleListApi: `${BASE_URL}/vehicle/list`,
+
+    // operator
+    getOperatorListApi: `${BASE_URL}/operator/list`,
 }
 
 export const CONFIG = {
