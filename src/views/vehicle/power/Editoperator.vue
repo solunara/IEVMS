@@ -2,7 +2,7 @@
     <el-card class="box-card marginBottom" style="margin-bottom: 10px;">
         <el-dropdown @command="handleCommand">
             <el-button type="primary">
-                选择操作员<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                {{userID ? userName:'选择操作员'}}<el-icon class="el-icon--right"><arrow-down /></el-icon>
             </el-button>
             <template #dropdown>
                 <el-dropdown-menu>
@@ -17,14 +17,13 @@
             :data="menuList"
             style="width: 100%; margin-bottom: 20px"
             row-key="id"
-            border
             default-expand-all
         >
             <el-table-column prop="menu_name" label="菜单目录" />
             <el-table-column prop="permission" label="授权" >
                 <template #default="{row}">
-                <el-checkbox-group v-model="checkList">
-                    <el-checkbox v-for="(v,i) in row.permission" :disabled="!userID" :key="i" :label="v.label" />
+                <el-checkbox-group v-model="row.userPermission">
+                    <el-checkbox v-for="(v,i) in row.permission" :disabled="!userID" :key="i" :label="v.label" @change="update(row, v)" />
                 </el-checkbox-group>
                 </template>
             </el-table-column>
@@ -37,15 +36,17 @@ import { ref ,onMounted} from 'vue'
 import { ArrowDown } from '@element-plus/icons-vue'
 // import {getModules, getOperatorList} from '@/api/operator'
 import {createTree} from '@/utils/fn'
-import {operatorData} from './operatorData.js'
+import {operatorData, operatorPermissionData} from './operatorData.js'
 
 let menuList = ref([]); //菜单列表
 let userID = ref(''); //操作员ID
 let opersList = ref([]); //操作员列表
+let userName = ref(''); //操作员名称
 
+// 默认菜单模板
 let modules = [
   {id: 1, menu_name: '首页', father_id: 0, menu_type: 1, menu_level: 1, menu_url: '/index', creator: '', component: 'vehicle', icon: 'icon-chushihua', modified: '', name: 'vehicle', sort: 2, permission: null},
-  {id: 2, menu_name: '车辆列表', father_id: 0, menu_type: 1, menu_level: 1, menu_url: '/vehicle', creator: '', component: 'vehicle', icon: 'icon-chushihua', modified: '', name: 'vehicle', sort: 2, permission: [{label: '新增车辆', value: 'create'}, {label: '编辑', value: 'modify'}, {label: '删除', value: 'delete'}]},
+  {id: 2, menu_name: '车辆列表', father_id: 0, menu_type: 1, menu_level: 1, menu_url: '/vehicle', creator: '', component: 'vehicle', icon: 'icon-chushihua', modified: '', name: 'vehicle', sort: 2, permission: [{label: '新增车辆', value: 'add'}, {label: '编辑', value: 'edit'}, {label: '删除', value: 'delete'}]},
   {id: 3, menu_name: '车辆电量监控', father_id: 0, menu_type: 1, menu_level: 2, menu_url: '/monitor', creator: '', component: 'vehicle', icon: 'icon-chushihua', modified: '', name: 'vehicle', sort: 2, permission: null},
   {id: 4, menu_name: '车辆充电', father_id: 3, menu_type: 1, menu_level: 2, menu_url: '/monitor/charge', creator: '', component: 'vehicle', icon: 'icon-chushihua', modified: '', name: 'vehicle', sort: 2, permission: null},
   {id: 5, menu_name: '车辆维保', father_id: 3, menu_type: 1, menu_level: 2, menu_url: '/monitor/maintenance', creator: '', component: 'vehicle', icon: 'icon-chushihua', modified: '', name: 'vehicle', sort: 2, permission: null},
@@ -74,11 +75,49 @@ function handleLevel(menu,data){
   });
   createTree(menu,data);
 }
-const checkList = ref(['编辑']);
 
 //选择操作员
 function handleCommand(command){
-  userID.value = command;
+    userID.value = command;
+    userName.value = operatorData[command-1].account;
+    // let res = await findModulesByUid({id:command.id});
+    menuList.value = [];
+    //数据结构转换
+    opersList.value = operatorPermissionData[command-1]
+    handleLevel(menuList.value, operatorPermissionData[command-1]);
+}
+
+//修改权限
+function update(row,v){
+    console.log('old1: ', operatorPermissionData[userID.value][row.id]);
+    let exisedPermission=false
+    if(!userID.value) return;
+    if(operatorPermissionData[userID.value][row.id].userPermission===null){
+        console.log('row.id: ', row.id);
+        console.log('old2: ');
+        operatorPermissionData[userID.value][row.id].userPermission=[v.label]
+    }else{
+        for(let i=0;i<operatorPermissionData[userID.value][row.id].userPermission.length;i++){
+            console.log('old3: ', operatorPermissionData[userID.value][row.id]);
+            console.log('old4: ', operatorPermissionData[userID.value][row.id].userPermission);
+            if (operatorPermissionData[userID.value][row.id].userPermission[i] === v.label){
+                exisedPermission=true
+                operatorPermissionData[userID.value][row.id].userPermission.splice(i,1)
+                break
+            }
+        }
+        if(!exisedPermission){
+            operatorPermissionData[userID.value][row.id].userPermission=[ ...operatorPermissionData[userID.value][row.id].userPermission, v.label]
+        }
+    }
+    console.log('new: ', operatorPermissionData[userID.value][row.id].userPermission);
+
+    //   let data = {
+    //     uid:userID.value,
+    //     moduleJsonStr:JSON.stringify({mid:row.id,permission:[v]})
+    //   };
+    //   console.log(data);
+    // await updatePermission(data);
 }
 </script>
 
