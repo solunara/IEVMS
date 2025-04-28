@@ -15,6 +15,7 @@ const routes = [
     path: '/home',
     name: 'home',
     meta: {title: '首页'},
+    redirect: '/index',
     component: () => import('@/views/layout/Index.vue'),
     children: [
       {
@@ -59,7 +60,7 @@ const routes = [
         path: '/maplocation',
         name: 'maplocation',
         meta: {title: '地图分布'},
-        component: () => import('@/views/vehicle/Maplocation.vue'),
+        component: () => import('@/views/vehicle/maplocation/MapLocation.vue'),
       },
       {
         path: '/census',
@@ -107,7 +108,7 @@ router.beforeEach((to, from, next)=>{
   const toLogin = to.path.indexOf('/login')
   const tokenVal = getToken()
   if (toLogin == 0 && tokenVal){
-      next('/home')
+      next('/index')
   }else if(toLogin == 0 && !tokenVal) {
       next()
   }else if( tokenVal ){
